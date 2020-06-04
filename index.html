@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>covid-tracker</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    </head>
+    <body class="bg-dark text-white"> 
+      
+        <h1 class="text-center mt-5 bg-secondary text-white ">COVID-19 CASES WORLDWIDE</h1>
+        <div class="container">
+                
+                <br>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                      <tr class="text-white">
+                        <th>TOTAL CASES</th>
+                        <th>TOTAL DEATHS</th>
+                        <th>TOTAL RECOVERED</th>
+                        <th>NEW CASES</th>
+                        <th>NEW DEATHS</th>
+                        <th>NEW RECOVERED</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-white">
+                        <tr id="data">
+
+                        </tr>
+                    </tbody>
+                  </table>
+                <br>
+                
+               
+            
+                  <button onclick="refresh()" class="btn btn-danger btn-block" >
+                        Refresh Data
+                  </button>
+                  <br>
+                  
+        </div>
+        <h1 class="text-center mt-5 bg-info text-white ">COVID-19 India CASES</h1>
+        
+
+        <div class="container my-5 ">
+            <div class="row text-center">
+                <div class="col-3 text-warning">
+                    <h5>Confirmed</h5>
+                    <p id="confirmed"></p>
+                </div>
+                <div class="col-3 text-info">
+                    <h5>Active</h5>
+                    <p id="active"></p>
+                </div>
+                <div class="col-3 text-success">
+                    <h5>Recovered</h5>
+                    <p id="recovered"></p>
+                </div>
+                <div class="col-3 text-danger">
+                    <h5>Deceased</h5>
+                    <p id="deaths"></p>
+                </div>
+            </div>
+            <canvas id="mychart" >
+
+            </canvas>
+            <a href="https://www.covid19india.org/" class="btn btn-danger btn-block" role="button">Official Site Link</a>
+
+        </div>
+        <h1 class="text-center mt-5 bg-success ">STAYHOME-STAYSAFE  </h1>
+       
+    </body>
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        <script src="script.js"> </script>
+    <script>
+         
+             init()
+
+
+
+             function init()
+             {
+                 var url="https://api.covid19api.com/summary"
+                 var data=''
+                 $.get(url,function(data){
+                     console.log(data.Global)
+
+                     data= ` 
+                       <td>${data.Global.TotalConfirmed}</td>
+                       <td>${data.Global.TotalDeaths}</td>
+                       <td>${data.Global.TotalRecovered}</td>
+                       <td>${data.Global.NewConfirmed}</td>
+                       <td>${data.Global.NewDeaths}</td>
+                       <td>${data.Global.NewRecovered}</td>
+                     `
+
+                     $("#data").html(data)
+                 })
+             }
+
+           
+
+             function refresh()
+             {
+                 clear()
+                 init()
+                 
+             }
+
+             function clear()
+             {
+                 $(data).empty()
+                 
+             }
+         
+    </script>
+
+</html>
